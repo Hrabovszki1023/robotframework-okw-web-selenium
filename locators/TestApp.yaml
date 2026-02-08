@@ -1,0 +1,5 @@
+TestApp:
+  LoginDialog:
+    Benutzer:
+      class: okw4robot.widgets.textfield.TextField
+      locator: { css: '[data-testid="username"]' }

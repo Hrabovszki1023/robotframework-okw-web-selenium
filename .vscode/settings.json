@@ -1,0 +1,13 @@
+\
+{
+  "window.autoDetectColorScheme": false,
+  "workbench.colorTheme": "Default Light+",
+  "workbench.preferredLightColorTheme": "Default Light+",
+  "workbench.preferredDarkColorTheme": "Default Dark+",
+
+  "python.defaultInterpreterPath": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+  "robot.language-server.python": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+  "files.associations": { "*.robot": "robot" },
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true
+}

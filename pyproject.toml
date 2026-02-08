@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "okw4robot"
+version = "0.2.0"
+description = "Driver-agnostic keyword library for Robot Framework (OKW4Robot)"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "robotframework",
+  "selenium",
+  "PyYAML",
+]
+authors = [
+  { name = "Zoltán Hrabovszki" }
+]
+license = { file = "LICENSE" }
+classifiers = [
+  "License :: Other/Proprietary License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+]
+
+[project.urls]
+Repository = "https://github.com/Hrabovszki1023/okw4robot"
+Homepage = "https://github.com/Hrabovszki1023/okw4robot"
+Documentation = "https://github.com/Hrabovszki1023/okw4robot/tree/main/docs"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+namespaces = false

@@ -1,0 +1,63 @@
+@startuml AdaptersSequence
+title OKW4Robot – Sequenz: Start Host → Start App → Select Window → SetValue
+
+actor Tester as T
+participant "HostKeywords" as HK
+participant "AppKeywords" as AK
+participant "WidgetKeywords" as WK
+participant "Context" as C
+participant "Adapter\n(SeleniumWebAdapter)" as AD
+participant "BaseWidget\n(TextField)" as W
+participant "Browser/DOM" as DOM
+
+' Start Host
+T -> HK: Start Host("Chrome")
+HK -> C: set_adapter(SeleniumWebAdapter(browser=chrome))
+activate C
+C --> HK: adapter set
+deactivate C
+HK -> AD: open browser about:blank (constructor)
+AD -> DOM: open_browser
+
+' Start App
+T -> AK: Start App("web/WidgetsDemo")
+AK -> C: set_app(app_name, app_model)
+C --> AK: app set
+
+' Select Window
+T -> AK: Select Window("WidgetsDemo")
+AK -> C: set_window("WidgetsDemo")
+C --> AK: window set
+
+' SetValue (URL or Field)
+T -> WK: SetValue("Name", "Alice")
+WK -> C: get current app/window
+WK -> WK: resolve_widget("Name")
+WK -> W: new TextField(adapter, locator, extras)
+activate W
+WK -> W: okw_set_value("Alice")
+W -> W: _wait_before('write')
+W -> AD: element_exists/visible/enabled/scroll/…
+AD -> DOM: checks
+W -> AD: clear_text(locator)
+AD -> DOM: clear
+W -> AD: input_text(locator, "Alice")
+AD -> DOM: type
+deactivate W
+WK --> T: done
+
+note right of WK
+resolve_widget(name):
+1) App‑YAML → class/locator/extras
+2) adapter = Context.get_adapter()
+3) return class(adapter, locator, **extras)
+end note
+
+note right of W
+_wait_before('write')
+exists → scroll_into_view → visible → enabled → (editable) → until_not_visible
+Timeout/Poll & Busy‑Selektoren
+konfigurierbar (global/Klasse/Instanz)
+end note
+
+@enduml

@@ -1,0 +1,120 @@
+@startuml WidgetsInheritance
+title OKW4Robot – Widget-Vererbung (mit projektspezifischer Erweiterung)
+
+package "okw4robot.widgets.base" {
+  abstract class BaseWidget {
+    +adapter
+    +locator
+    +options
+    .. Interaktion ..
+    {abstract} okw_click()
+    {abstract} okw_double_click()
+    {abstract} okw_set_value(value)
+    {abstract} okw_select(value)
+    {abstract} okw_type_key(key)
+    {abstract} okw_verify_value(expected)
+    {abstract} okw_verify_value_wcm(expected)
+    {abstract} okw_verify_value_regex(expected)
+    +okw_verify_exist(): bool
+    +okw_log_value()
+    +okw_has_value()
+    +okw_memorize_value()
+    .. Sync (Basis) ..
+    # _get_global_sync(intent): dict
+    # _merge_wait(intent): dict
+    # _wait_before(intent)
+  }
+}
+
+package "okw4robot.widgets.common" {
+  class Button {
+    +okw_click()
+    +okw_double_click()
+  }
+  class TextField {
+    +okw_click()
+    +okw_set_value(value)
+    +okw_type_key(key)
+    +okw_verify_value(expected)
+    +okw_verify_value_wcm(expected)
+    +okw_verify_value_regex(expected)
+  }
+  class MultilineField {
+  }
+  class Label {
+    +okw_verify_value(expected)
+    +okw_verify_value_wcm(expected)
+    +okw_verify_value_regex(expected)
+  }
+  class CheckBox {
+    +okw_click()
+    +okw_set_value(value)
+    +okw_verify_value(expected)
+  }
+  class ComboBox {
+    +okw_set_value(value)
+    +okw_select(value)
+    +okw_verify_value(expected)
+    .. intern ..
+    - _is_editable(): bool
+  }
+  class RadioList {
+    +okw_select(value)
+    +okw_verify_value(expected)
+    +okw_verify_value_wcm(expected)
+    +okw_verify_value_regex(expected)
+    .. intern ..
+    - _extract_name_from_locator(): str
+    - _container_css(): str
+    - _current_value(): str
+  }
+  class WebRadioList {}
+  class ListBox {
+    +okw_select(value)
+    +okw_verify_value(expected)
+    +okw_log_value()
+    +okw_memorize_value()
+  }
+}
+
+BaseWidget <|-- Button
+BaseWidget <|-- TextField
+TextField <|-- MultilineField
+BaseWidget <|-- Label
+BaseWidget <|-- CheckBox
+BaseWidget <|-- ComboBox
+BaseWidget <|-- RadioList
+RadioList <|-- WebRadioList
+BaseWidget <|-- ListBox
+
+package "myproject.widgets" {
+  class MyProjectButton {
+    +okw_click()
+    .. projektspezifische Sync ..
+    - _project_waits(): void
+  }
+}
+
+Button <|-- MyProjectButton
+
+note right of MyProjectButton
+Beispiel-Projekterweiterung:
+okw_click() {
+  _wait_before('write')
+  _project_waits()              ' z.B. until_not_visible: .busy-overlay
+  adapter.click(locator)
+}
+Projekt-Waits können auch
+über YAML-Instanzkonfiguration
+per wait.write.until_not_visible
+gesetzt werden.
+end note
+
+note bottom of BaseWidget
+Sync-Strategie (vereinfacht):
+- _get_global_sync(intent)
+- _merge_wait(intent)  ' Instanz > Klasse > Global
+- _wait_before(intent): exists → scroll → visible → enabled → editable → until_not_visible
+end note
+
+@enduml

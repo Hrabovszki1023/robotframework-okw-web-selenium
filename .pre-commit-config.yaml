@@ -1,0 +1,21 @@
+repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v4.6.0
+  hooks:
+    - id: check-yaml
+    - id: end-of-file-fixer
+    - id: trailing-whitespace
+
+- repo: https://github.com/adrienverge/yamllint
+  rev: v1.35.1
+  hooks:
+    - id: yamllint
+      additional_dependencies: [yamllint==1.35.1]
+
+- repo: local
+  hooks:
+    - id: validate-object-map
+      name: Validate Object Map
+      language: python
+      entry: python tools/validate_object_map.py
+      files: ^locators/.+\.objects\.yaml$
