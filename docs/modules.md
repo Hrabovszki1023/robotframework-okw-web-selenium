@@ -24,9 +24,6 @@ Stellt Host-bezogene Keywords bereit (Start Host, Stop Host etc.).
 ## `okw4robot/keywords/widget_keywords.py`
 Stellt Widget-bezogene Keywords bereit (ClickOn, SetValue etc.).
 
-## `okw4robot/locators/__init__.py`
-Initialisiert das Lokatoren-Untermodul.
-
 ## `okw4robot/runtime/context.py`
 Verwaltet den aktuellen Testkontext (Adapter, App, Window).
 

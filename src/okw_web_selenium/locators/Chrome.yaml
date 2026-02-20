@@ -1,0 +1,14 @@
+Chrome:
+  __self__:
+    class: okw_web_selenium.adapters.selenium_web.SeleniumWebAdapter
+    browser: chrome
+
+  Chrome:
+
+    URL:
+      class: okw_web_selenium.widgets.host.browsercontrol.UrlBar.UrlBar
+      locator: { virtual: true }
+
+    Maximize Window:
+      class: okw_web_selenium.widgets.host.browsercontrol.BrowserControl
+      locator: { virtual: true }

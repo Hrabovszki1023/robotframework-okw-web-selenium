@@ -1,0 +1,9 @@
+TableDemo:
+  TableDemo:
+    __self__:
+      class: okw_web_selenium.widgets.webse_label.WebSe_Label
+      locator: { css: '[data-testid="table-demo-page"]' }
+
+    DemoTable:
+      class: okw_web_selenium.widgets.webse_table.WebSe_Table
+      locator: { css: '[data-testid="demo-table"]' }

@@ -121,3 +121,8 @@ Die Zustandsverwaltung ist in `context.md` und `keywords_host_app*.md` beschrieb
 
 - Verify-Keywords schlagen fehl, wenn der Sollzustand **innerhalb des Timeouts** nicht erreicht wird.
 - Fehler sollen den Widget-Namen, die erwarteten Werte/Pattern und den zuletzt beobachteten Ist-Wert enthalten (Debugbarkeit).
+
+## Value Expansion
+
+This library complies with the OKW Global Value Expansion Model.
+All Value and Command parameters support $MEM{KEY}.

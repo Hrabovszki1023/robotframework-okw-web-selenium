@@ -1,0 +1,41 @@
+WidgetsDemo:
+  WidgetsDemo:
+    __self__:
+      class: okw_web_selenium.widgets.webse_label.WebSe_Label
+      locator: { css: '[data-testid="widgets-demo-page"]' }
+
+    Name:
+      class: okw_web_selenium.widgets.webse_textfield.WebSe_TextField
+      locator: { css: '[data-testid="tf-name"]' }
+
+    Vorname:
+      class: okw_web_selenium.widgets.webse_textfield.WebSe_TextField
+      locator: { css: '[data-testid="tf-vorname"]' }
+
+    Anmerkung:
+      class: okw_web_selenium.widgets.webse_multilinefield.WebSe_MultilineField
+      locator: { css: '[data-testid="ta-anmerkung"]' }
+
+    Verheiratet:
+      class: okw_web_selenium.widgets.webse_checkbox.WebSe_CheckBox
+      locator: { css: '[data-testid="cb-verheiratet"]' }
+
+    Zahlungsmethode:
+      class: okw_web_selenium.widgets.webse_radiolist.WebSe_RadioList
+      group: zahlungsmethode
+
+    Lieferung:
+      class: okw_web_selenium.widgets.webse_radiolist.WebSe_RadioList
+      locator: { css: '[data-testid="rl-lieferung"]' }
+
+    Geschlecht:
+      class: okw_web_selenium.widgets.webse_combobox.WebSe_ComboBox
+      locator: { css: '[data-testid="combo-geschlecht"]' }
+
+    OK:
+      class: okw_web_selenium.widgets.webse_button.WebSe_Button
+      locator: { css: '[data-testid="btn-ok"]' }
+
+    Status:
+      class: okw_web_selenium.widgets.webse_label.WebSe_Label
+      locator: { css: '[data-testid="status-text"]' }

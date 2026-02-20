@@ -1,0 +1,24 @@
+LoginDialog:
+  __self__:
+    class: okw_web_selenium.widgets.webse_label.WebSe_Label
+    locator: { css: '[data-testid="login-page"]' }
+
+  Benutzer:
+    class: okw_web_selenium.widgets.webse_textfield.WebSe_TextField
+    locator: { css: '[data-testid="username"]' }
+
+  Passwort:
+    class: okw_web_selenium.widgets.webse_textfield.WebSe_TextField
+    locator: { css: '[data-testid="password"]' }
+
+  OK:
+    class: okw_web_selenium.widgets.webse_button.WebSe_Button
+    locator: { css: '[data-testid="login"]' }
+
+  Abbruch:
+    class: okw_web_selenium.widgets.webse_button.WebSe_Button
+    locator: { css: '[data-testid="cancel"]' }
+
+  Status:
+    class: okw_web_selenium.widgets.webse_label.WebSe_Label
+    locator: { css: '[data-testid="status-text"]' }
