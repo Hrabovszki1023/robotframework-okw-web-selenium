@@ -1,9 +1,6 @@
 *** Settings ***
-Library    SeleniumLibrary
-Library    okw4robot.keywords.host.HostKeywords                 WITH NAME    Host
-Library    okw4robot.keywords.app.AppKeywords                   WITH NAME    App
-Library    okw4robot.keywords.widget_keywords.WidgetKeywords    WITH NAME    KW
-Library    okw4robot.keywords.placeholder_keywords.PlaceholderKeywords    WITH NAME    PH
+Library    okw_web_selenium.library.OkwWebSeleniumLibrary
+
 
 *** Variables ***
 ${DEMO_FILE}    docs/examples/widgets_demo.html
@@ -16,7 +13,7 @@ Setup Widgets Demo
     SelectWindow  Chrome
     ${FILE_URL}=   Evaluate    __import__('pathlib').Path('${DEMO_FILE}').resolve().as_uri()
     SetValue       URL         ${FILE_URL}
-    StartApp      web/WidgetsDemo
+    StartApp      WidgetsDemo
 
 Teardown Widgets Demo
     StopHost

@@ -52,4 +52,4 @@ class OkwWebSeleniumLibrary(OKW4RobotLibrary, WebKeywords):
 
     def __init__(self):
         """Initialisiert die OkwWebSeleniumLibrary."""
-        pass
+        super().__init__()

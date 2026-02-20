@@ -1,8 +1,6 @@
 *** Settings ***
-Library    SeleniumLibrary
-Library    okw4robot.keywords.host.HostKeywords                 WITH NAME    Host
-Library    okw4robot.keywords.app.AppKeywords                   WITH NAME    App
-Library    okw4robot.keywords.widget_keywords.WidgetKeywords    WITH NAME    KW
+Library    okw_web_selenium.library.OkwWebSeleniumLibrary
+
 
 *** Variables ***
 ${DEMO_FILE}    docs/examples/widgets_demo.html
@@ -13,8 +11,8 @@ Setup Widgets Demo
     StartApp      Chrome
     SelectWindow  Chrome
     ${FILE_URL}=   Evaluate    __import__('pathlib').Path('${DEMO_FILE}').resolve().as_uri()
-    KW.SetValue    URL         ${FILE_URL}
-    StartApp      web/WidgetsDemo
+    SetValue    URL         ${FILE_URL}
+    StartApp      WidgetsDemo
 
 Teardown Widgets Demo
     StopHost
@@ -23,12 +21,12 @@ Teardown Widgets Demo
 HasFocus YES And NO
     Setup Widgets Demo
     SelectWindow   WidgetsDemo
-    KW.SetFocus         Name
-    KW.VerifyHasFocus   Name        YES
-    KW.VerifyHasFocus   Vorname     NO
-    KW.SetFocus         Vorname
-    KW.VerifyHasFocus   Name        NO
-    KW.VerifyHasFocus   Vorname     YES
+    SetFocus         Name
+    VerifyHasFocus   Name        YES
+    VerifyHasFocus   Vorname     NO
+    SetFocus         Vorname
+    VerifyHasFocus   Name        NO
+    VerifyHasFocus   Vorname     YES
     Teardown Widgets Demo
 
 

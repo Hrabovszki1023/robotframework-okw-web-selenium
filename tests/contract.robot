@@ -1,7 +1,7 @@
 *** Settings ***
 Documentation    OKW Web Selenium Contract
 ...              This test enforces the public keyword contract.
-Library          OkwWebSelenium
+Library    okw_web_selenium.library.OkwWebSeleniumLibrary
 
 *** Variables ***
 @{KW}

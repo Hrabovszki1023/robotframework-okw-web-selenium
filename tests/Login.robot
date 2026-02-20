@@ -1,9 +1,5 @@
 *** Settings ***
-Library    SeleniumLibrary
-Library    okw4robot.keywords.host.HostKeywords                 WITH NAME    Host
-Library    okw4robot.keywords.app.AppKeywords                   WITH NAME    App
-Library    okw4robot.keywords.widget_keywords.WidgetKeywords    WITH NAME    KW
-
+Library    okw_web_selenium.library.OkwWebSeleniumLibrary
 # Suite Setup     Setup Login Test
 # Suite Teardown  Close All Browsers
 
@@ -17,7 +13,7 @@ Setup Login Test
     SelectWindow  Chrome
     SetValue       URL       ${LOGIN_HTML}
     # ClickOn        Maximize Window
-    StartApp      web/TestAppOKW4Robot_WEB
+    StartApp      TestAppOKW4Robot_WEB
 
 *** Test Cases ***
 Login OK

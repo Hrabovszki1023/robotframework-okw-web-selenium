@@ -1,8 +1,6 @@
 *** Settings ***
-Library    SeleniumLibrary
-Library    okw4robot.keywords.host.HostKeywords                 WITH NAME    Host
-Library    okw4robot.keywords.app.AppKeywords                   WITH NAME    App
-Library    okw4robot.keywords.widget_keywords.WidgetKeywords    WITH NAME    KW
+Library    okw_web_selenium.library.OkwWebSeleniumLibrary
+
 
 *** Variables ***
 ${DEMO_FILE}    docs/examples/widgets_demo.html
@@ -13,8 +11,8 @@ Setup Widgets Demo
     StartApp      Chrome
     SelectWindow  Chrome
     ${FILE_URL}=   Evaluate    __import__('pathlib').Path('${DEMO_FILE}').resolve().as_uri()
-    KW.SetValue    URL         ${FILE_URL}
-    StartApp      web/WidgetsDemo
+    SetValue    URL         ${FILE_URL}
+    StartApp      WidgetsDemo
 
 Teardown Widgets Demo
     StopHost
@@ -23,9 +21,9 @@ Teardown Widgets Demo
 Exists YES And NO
     Setup Widgets Demo
     SelectWindow   WidgetsDemo
-    KW.VerifyExist   Name         YES
-    KW.ExecuteJS    document.querySelector('[data-testid="ta-anmerkung"]').remove();
-    KW.VerifyExist   Anmerkung    NO
+    VerifyExist   Name         YES
+    ExecuteJS    document.querySelector('[data-testid="ta-anmerkung"]').remove();
+    VerifyExist   Anmerkung    NO
     Teardown Widgets Demo
 
 
