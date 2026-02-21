@@ -9,6 +9,7 @@ Selenium-spezifische Dokumentation fuer `robotframework-okw-web-selenium`.
 
 ## Widget-Implementierung
 
+- [widgets_common.md](widgets_common.md) – WebSe_*-Klassenreferenz (alle Widgets)
 - [Web_Widget_Matrix.md](Web_Widget_Matrix.md) – Welche HTML-Elemente von welchem WebSe_*-Widget abgedeckt werden
 - [widgets_combobox_listbox.md](widgets_combobox_listbox.md) – WebSe_ComboBox und WebSe_ListBox im Detail
 - [radiolist.md](radiolist.md) – WebSe_RadioList: Radio-Button-Gruppen, Locator-Strategien
