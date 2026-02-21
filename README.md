@@ -1,6 +1,6 @@
 # OKW4Robot
 
-Treiber-unabhängige Keyword-Architektur für das [Robot Framework](https://robotframework.org/).
+Treiberagnostische Keyword-Architektur fuer das [Robot Framework](https://robotframework.org/).
 
 Dieses Projekt ermöglicht es, mit einem einheitlichen Satz von Schlüsselwörtern Tests gegen verschiedene GUI-Technologien (Web, Swing etc.) durchzuführen.
 

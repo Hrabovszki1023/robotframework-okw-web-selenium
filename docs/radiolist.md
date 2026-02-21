@@ -1,6 +1,6 @@
 # RadioList (Web/HTML) – Empfehlungen, HTML‑Muster, Auswahlstrategie
 
-Diese Seite bezieht sich auf Web/HTML. Radio‑Buttons werden im Web über das `name`‑Attribut zu Gruppen zusammengefasst. Eine einheitliche, semantische „Klammer“ ist nicht vorgeschrieben (fieldset ist empfohlen, aber nicht verpflichtend). Diese Seite beschreibt, wie eine RadioList aufgebaut sein sollte, und wie OKW4Robot (treiberunabhängig) die Auswahl vornimmt.
+Diese Seite bezieht sich auf Web/HTML. Radio‑Buttons werden im Web über das `name`‑Attribut zu Gruppen zusammengefasst. Eine einheitliche, semantische „Klammer“ ist nicht vorgeschrieben (fieldset ist empfohlen, aber nicht verpflichtend). Diese Seite beschreibt, wie eine RadioList aufgebaut sein sollte, und wie OKW4Robot (treiberagnostisch) die Auswahl vornimmt.
 
 ---
 
@@ -119,6 +119,6 @@ Tests: `tests/WidgetsDemo.robot` enthält Fälle für beide Gruppen inkl. Cycle�
 | name‑basiert | `group: <name>` | `name + value` (Adapter) | `name + expected` (Adapter) | kein elementbezogener Scroll (ohne Locator) |
 | container‑basiert | `locator: { css: '[data-testid="…"]' }` | innerhalb des Containers: `input[type='radio'][value='<Wert>']` | `:checked` im Container, `value` vergleichen | Container‑Locator (scrollIntoView) |
 
-Hinweis: Beide Varianten sind treiberunabhängig; sie beschreiben HTML‑Struktur, nicht den konkreten Web‑Treiber.
+Hinweis: Beide Varianten sind treiberagnostisch; sie beschreiben HTML‑Struktur, nicht den konkreten Web‑Treiber.
 
 Hinweis: Für Web empfehlen wir die Klasse `WebRadioList`. Die bisherige `RadioList` bleibt als Alias/Abwärtskompatibilität bestehen.
