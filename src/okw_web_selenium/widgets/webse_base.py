@@ -19,6 +19,16 @@ class WebSe_Base(OkwWidget):
         self.sl = adapter.sl  # SeleniumLibrary-Instanz
 
     # ------------------------------------------------------------------
+    # Screenshot (Base64)
+    # ------------------------------------------------------------------
+    def okw_get_screenshot_base64(self) -> "str | None":
+        try:
+            el = self.sl.get_webelement(self.adapter._resolve(self.locator))
+            return el.screenshot_as_base64
+        except Exception:
+            return None
+
+    # ------------------------------------------------------------------
     # Interaktion (gemeinsam)
     # ------------------------------------------------------------------
     def okw_click(self):
