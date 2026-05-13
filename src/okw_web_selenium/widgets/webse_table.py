@@ -88,3 +88,43 @@ class WebSe_Table(WebSe_Base):
 
     def get_header_names(self) -> list[str]:
         return [c.text or "" for c in self._header_cells()]
+
+    # ------------------------------------------------------------------
+    # Screenshots fuer Tabellen-Elemente
+    # ------------------------------------------------------------------
+    def get_table_screenshot_base64(self) -> "str | None":
+        try:
+            return self._root().screenshot_as_base64
+        except Exception:
+            return None
+
+    def get_cell_screenshot_base64(self, row_index: int, col_index: int) -> "str | None":
+        try:
+            if row_index == 0:
+                cells = self._header_cells()
+                if 1 <= col_index <= len(cells):
+                    return cells[col_index - 1].screenshot_as_base64
+                return None
+            rows = self._data_rows()
+            if 1 <= row_index <= len(rows):
+                cells = self._row_cells(rows[row_index - 1])
+                if 1 <= col_index <= len(cells):
+                    return cells[col_index - 1].screenshot_as_base64
+            return None
+        except Exception:
+            return None
+
+    def get_row_screenshot_base64(self, row_index: int) -> "str | None":
+        try:
+            if row_index == 0:
+                tbl = self._root()
+                heads = tbl.find_elements("css selector", "thead tr")
+                if heads:
+                    return heads[0].screenshot_as_base64
+                return None
+            rows = self._data_rows()
+            if 1 <= row_index <= len(rows):
+                return rows[row_index - 1].screenshot_as_base64
+            return None
+        except Exception:
+            return None

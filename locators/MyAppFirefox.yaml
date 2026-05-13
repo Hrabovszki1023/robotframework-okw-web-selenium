@@ -1,0 +1,6 @@
+MyAppFirefox:
+  __self__:
+    class: okw_web_selenium.adapters.selenium_web.SeleniumWebAdapter
+    browser: firefox
+  Firefox: !include Firefox.yaml
+  _pages: !include-merge Allpages.yaml

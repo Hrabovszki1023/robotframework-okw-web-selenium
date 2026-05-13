@@ -5,9 +5,18 @@ class SeleniumWebAdapter:
 
     def __init__(self, browser):
         self.browser = browser
+        self._shutdown_called = False
         self.sl = SeleniumLibrary()
-        self.sl.open_browser("about:blank", browser=self.browser)
+        self._browser_index = self.sl.open_browser("about:blank", browser=self.browser)
 
+    def shutdown(self):
+        if self._shutdown_called:
+            return
+        self._shutdown_called = True
+        try:
+            self.sl.close_browser()
+        except Exception:
+            pass
 
     def go_to(self, url):
         self.sl.go_to(url)
