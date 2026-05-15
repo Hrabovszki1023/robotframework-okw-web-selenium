@@ -1,1 +1,3 @@
 DynamicTablePage: !include ExpandTestingDynamicTable.yaml
+SauceDemoLogin: !include SauceDemoLogin.yaml
+SauceDemoProducts: !include SauceDemoProducts.yaml
