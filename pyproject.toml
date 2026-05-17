@@ -4,13 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "robotframework-okw-web-selenium"
-version = "0.4.0"
+version = "0.4.1"
 description = "Selenium driver for OKW4Robot - Web GUI test automation with Chrome, Firefox and more."
 readme = "README.md"
 requires-python = ">=3.10"
 keywords = ["robotframework", "testing", "testautomation", "gui", "selenium", "okw", "web"]
 dependencies = [
-  "robotframework-okw4robot>=0.5.0",
+  "robotframework-okw4robot>=0.5.1",
   "robotframework-seleniumlibrary>=6.0",
   "selenium>=4.0",
 ]

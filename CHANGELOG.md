@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [0.4.0] - 2026-05-17
+## [0.4.1] - 2026-05-17
 
 ### Highlights
 - `MoveOver` support: `okw_move_over()` in `WebSe_Base` using Selenium ActionChains
@@ -72,6 +72,6 @@ All notable changes to this project will be documented in this file.
 - robotframework-okw4robot: >= 0.4.0
 - selenium: >= 4.0
 
-[0.4.0]: https://github.com/Hrabovszki1023/robotframework-okw-web-selenium/releases/tag/v0.4.0
+[0.4.1]: https://github.com/Hrabovszki1023/robotframework-okw-web-selenium/releases/tag/v0.4.1
 [0.3.0]: https://github.com/Hrabovszki1023/robotframework-okw-web-selenium/releases/tag/v0.3.0
 [0.2.0]: https://github.com/Hrabovszki1023/robotframework-okw-web-selenium/releases/tag/v0.2.0
