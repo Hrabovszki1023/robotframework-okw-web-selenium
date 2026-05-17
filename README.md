@@ -30,18 +30,17 @@ Library    okw_web_selenium.library.OkwWebSeleniumLibrary
 
 *** Test Cases ***
 Login Test
-    StartHost     Chrome
-    StartApp      Chrome
-    SelectWindow  Chrome
-    SetValue      URL              https://example.com/login
     StartApp      MyApp
     SelectWindow  LoginDialog
     SetValue      Username         admin
     SetValue      Password         secret
     ClickOn       Login
     VerifyValue   Status           Logged in
-    StopHost
 ```
+
+`StartApp` loads the app YAML (`locators/MyApp.yaml`). If the YAML contains a
+`__self__` section with the adapter class and browser parameter, the browser is
+opened automatically — no separate `StartHost` needed.
 
 All keywords come from the core (`okw4robot`). This package only provides
 the Selenium-specific widget implementations — you never import individual
@@ -98,6 +97,9 @@ MyApp:
 | `WebSe_Link` | `<a>` | click, get_text |
 | `WebSe_Table` | `<table>` | get_cell_value, get_row_count, get_headers |
 | `WebSe_MultilineField` | `<textarea>`, contenteditable | set_value, type_key, get_value |
+
+All widget classes inherit `click`, `move_over`, `get_tooltip`, `get_label`,
+`get_attribute`, `get_placeholder` from `WebSe_Base`.
 | `BrowserControl` | Browser host | start, stop, select_window |
 | `UrlBar` | Address bar | set_value (navigate to URL) |
 

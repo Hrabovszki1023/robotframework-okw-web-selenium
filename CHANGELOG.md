@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.4.0] - 2026-05-17
+
+### Highlights
+- `MoveOver` support: `okw_move_over()` in `WebSe_Base` using Selenium ActionChains
+- `SetContext` support for repeating GUI structures
+- Requires okw4robot >= 0.5.0
+
+### Features
+- `WebSe_Base.okw_move_over()` — moves mouse over element via `ActionChains.move_to_element()`.
+  Inherited by all WebSe_* widgets. Pre-sync: `_wait_before('read')`.
+- `SeleniumWebAdapter.move_over(locator)` — adapter method for mouse hover.
+- All WebSe_* widgets support MoveOver through inheritance from `WebSe_Base`.
+
+### Docs
+- `widgets_common.md`: `okw_move_over()` added to WebSe_Base method list
+- `Web_Widget_Matrix.md`: MoveOver row added (all widget types supported)
+
+### Breaking Changes
+- None
+
 ## [0.3.0] - 2026-02-22
 
 ### Highlights
@@ -52,5 +72,6 @@ All notable changes to this project will be documented in this file.
 - robotframework-okw4robot: >= 0.4.0
 - selenium: >= 4.0
 
+[0.4.0]: https://github.com/Hrabovszki1023/robotframework-okw-web-selenium/releases/tag/v0.4.0
 [0.3.0]: https://github.com/Hrabovszki1023/robotframework-okw-web-selenium/releases/tag/v0.3.0
 [0.2.0]: https://github.com/Hrabovszki1023/robotframework-okw-web-selenium/releases/tag/v0.2.0

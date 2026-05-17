@@ -36,6 +36,11 @@ class SeleniumWebAdapter:
         resolved = self._resolve(locator)
         self.sl.double_click_element(resolved)
 
+    def move_over(self, locator):
+        from selenium.webdriver.common.action_chains import ActionChains
+        el = self.sl.get_webelement(self._resolve(locator))
+        ActionChains(self.sl.driver).move_to_element(el).perform()
+
     def get_text(self, locator):
         resolved = self._resolve(locator)
         return self.sl.get_text(resolved)

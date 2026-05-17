@@ -5,6 +5,7 @@ Kurzbeschreibung: Aktionen, die keine Werte übergeben bekommen (z. B. Klicks).
 |---------------|:------:|:---------:|:--------------:|:-----:|:--------:|:--------:|:---------:|:-------:|
 | ClickOn       |   ✓    |     ✓     |       ✓        |       |    ✓     |          |           |         |
 | DoubleClickOn |   ✓    |           |                |       |          |          |           |         |
+| MoveOver      |   ✓    |     ✓     |       ✓        |   ✓   |    ✓     |    ✓     |     ✓     |    ✓    |
 | SetFocus      |   ✓    |     ✓     |       ✓        |   ✓   |    ✓     |    ✓     |     ✓     |    ✓    |
 
 ## 2. Aktionen mit Eingabewert

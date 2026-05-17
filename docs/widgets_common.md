@@ -15,7 +15,7 @@ Pfad: `okw_web_selenium/widgets/webse_base.py`
 Erbt von `OkwWidget`. Implementiert die allgemeine Selenium-Logik fuer den
 HTML-Standard:
 
-- **Interaktion**: `okw_click()`, `okw_double_click()`, `okw_delete()`
+- **Interaktion**: `okw_click()`, `okw_double_click()`, `okw_move_over()`, `okw_delete()`
 - **Zustand**: `okw_exists()`, `okw_is_visible()`, `okw_is_enabled()`, `okw_is_editable()`,
   `okw_has_focus()`, `okw_is_focusable()`, `okw_is_clickable()`, `okw_set_focus()`
 - **Werte lesen**: `okw_get_text()`, `okw_get_label()`, `okw_get_tooltip()`,
@@ -146,25 +146,58 @@ Pfad: `okw_web_selenium/widgets/webse_table.py`
 
 ## YAML-Beispiel
 
+**„Ein Fenster ist das, was man als Fenster definiert."** Fenster haben —
+wie jedes Widget — eine eigene `class` und einen `locator`. Siehe
+okw4robot CONTRACT.md (Abschnitt „Window-Modell") fuer das vollstaendige Konzept.
+
 ```yaml
-LoginDialog:
+# locators/MyApp.yaml
+MyApp:
   __self__:
-    class: okw_web_selenium.widgets.webse_label.WebSe_Label
+    class: okw_web_selenium.adapters.selenium_web.SeleniumWebAdapter
+    browser: chrome
+    url: https://example.com
+
+  # Fenster: ein logischer GUI-Bereich mit eigener class + locator
+  LoginDialog:
+    class: okw_web_selenium.widgets.webse_panel.WebSe_Panel
     locator: { css: '[data-testid="login-page"]' }
 
-  Benutzer:
-    class: okw_web_selenium.widgets.webse_textfield.WebSe_TextField
-    locator: { css: '[data-testid="username"]' }
+    Benutzer:
+      class: okw_web_selenium.widgets.webse_textfield.WebSe_TextField
+      locator: { css: '[data-testid="username"]' }
 
-  Passwort:
-    class: okw_web_selenium.widgets.webse_textfield.WebSe_TextField
-    locator: { css: '[data-testid="password"]' }
+    Passwort:
+      class: okw_web_selenium.widgets.webse_textfield.WebSe_TextField
+      locator: { css: '[data-testid="password"]' }
 
-  OK:
-    class: okw_web_selenium.widgets.webse_button.WebSe_Button
-    locator: { css: '[data-testid="login"]' }
+    OK:
+      class: okw_web_selenium.widgets.webse_button.WebSe_Button
+      locator: { css: '[data-testid="login"]' }
 
-  Status:
-    class: okw_web_selenium.widgets.webse_label.WebSe_Label
-    locator: { css: '[data-testid="status-text"]' }
+    Status:
+      class: okw_web_selenium.widgets.webse_label.WebSe_Label
+      locator: { css: '[data-testid="status-text"]' }
+
+  # Logisches "Fenster" — eine Sidebar (immer sichtbar)
+  NavBar:
+    class: okw_web_selenium.widgets.webse_panel.WebSe_Panel
+    locator: { css: "nav#main-nav" }
+
+    btnHome:
+      class: okw_web_selenium.widgets.webse_button.WebSe_Button
+      locator: { css: "a[href='/']" }
+```
+
+```robot
+*** Test Cases ***
+Login Test
+    StartApp        MyApp
+    SelectWindow    LoginDialog
+    SetValue        Benutzer    admin
+    SetValue        Passwort    secret
+    ClickOn         OK
+
+    SelectWindow    NavBar
+    ClickOn         btnHome
 ```

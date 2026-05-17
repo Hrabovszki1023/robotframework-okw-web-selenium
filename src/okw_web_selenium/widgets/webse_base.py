@@ -39,6 +39,10 @@ class WebSe_Base(OkwWidget):
         self._wait_before('write')
         self.adapter.double_click(self.locator)
 
+    def okw_move_over(self):
+        self._wait_before('read')
+        self.adapter.move_over(self.locator)
+
     def okw_delete(self):
         """Loescht den Feldinhalt: clear + Backspace-Fallback."""
         self._wait_before('write')
