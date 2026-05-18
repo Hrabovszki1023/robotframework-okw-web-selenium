@@ -195,13 +195,31 @@ class SeleniumWebAdapter:
     def radio_button_should_be_set_to(self, group_name: str, value: str):
         self.sl.radio_button_should_be_set_to(group_name, value)
 
+    # ------------------------------------------------------------------
+    # iFrame tracking: the adapter remembers which iframe is active
+    # and switches only when needed.
+    # ------------------------------------------------------------------
+    _current_iframe = None  # str key of the currently active iframe
+
+    def _ensure_default_content(self):
+        """Switch back to the top-level document if an iframe is active."""
+        if self._current_iframe is not None:
+            self.sl.driver.switch_to.default_content()
+            self._current_iframe = None
+
     def _resolve(self, locator_dict):
         if not locator_dict:
             raise ValueError("Locator missing")
         # Shadow DOM: navigate through shadow roots, return WebElement
-        from okw_web_selenium.shadow_locator import ShadowLocator
+        from okw_web_selenium.shadow_locator import ShadowLocator, IFrameLocator
         if isinstance(locator_dict, ShadowLocator):
+            self._ensure_default_content()
             return self._resolve_shadow(locator_dict)
+        # iFrame: switch into frame if needed, return locator string
+        if isinstance(locator_dict, IFrameLocator):
+            return self._resolve_iframe(locator_dict)
+        # Normal locator: ensure we are in default content
+        self._ensure_default_content()
         # WebElement passthrough (e.g. from shadow resolution)
         from selenium.webdriver.remote.webelement import WebElement
         if isinstance(locator_dict, WebElement):
@@ -251,6 +269,40 @@ class SeleniumWebAdapter:
             )
         css_sel = list(loc.values())[0]
         return root.find_element(By.CSS_SELECTOR, css_sel)
+
+    def _resolve_iframe(self, iframe_loc):
+        """Switch into the target iframe (if not already there) and
+        return the resolved element locator string.
+
+        The adapter stays inside the iframe after this call so that the
+        returned locator string can be used by SeleniumLibrary methods
+        to find the element.  When a subsequent ``_resolve()`` call
+        targets a normal element or a different iframe, the adapter
+        switches back automatically.
+
+        Returns:
+            Locator string (e.g. ``"id:email"``) — resolved inside
+            the active iframe context.
+        """
+        iframe_key = str(iframe_loc.iframe_locator)
+
+        if self._current_iframe != iframe_key:
+            # Switch to correct iframe
+            driver = self.sl.driver
+            driver.switch_to.default_content()
+            iframe_resolved = self._resolve_dict(iframe_loc.iframe_locator)
+            iframe_el = self.sl.get_webelement(iframe_resolved)
+            driver.switch_to.frame(iframe_el)
+            self._current_iframe = iframe_key
+
+        return self._resolve_dict(iframe_loc.element_locator)
+
+    def _resolve_dict(self, locator_dict):
+        """Resolve a plain locator dict to a SeleniumLibrary locator string."""
+        if isinstance(locator_dict, str):
+            return locator_dict
+        key, value = list(locator_dict.items())[0]
+        return f"{key}:{value}"
 
     # ------------------------------------------------------------------
     # Drag & Drop (collect → execute pattern)

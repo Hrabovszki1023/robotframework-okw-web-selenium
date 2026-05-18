@@ -1,17 +1,19 @@
-"""ShadowLocator -- Wrapper for locators inside Shadow DOM.
+"""Locator wrappers for elements behind isolation boundaries.
 
-Carries the shadow host chain alongside the element locator.
-The adapter detects this type in ``_resolve()`` and navigates
-through shadow roots before finding the target element.
+These wrappers carry extra context (shadow host chain, iframe locator)
+alongside the normal element locator.  ``WebSe_Base.__init__`` creates
+them automatically when the YAML entry contains ``shadow_host`` or
+``iframe``.  The adapter detects the wrapper type in ``_resolve()``
+and uses the appropriate traversal strategy.
 
-YAML example (single shadow host)::
+YAML example -- Shadow DOM (CSS only)::
 
     ShadowButton:
       class: okw_web_selenium.widgets.webse_button.WebSe_Button
       shadow_host: { css: '#shadow-host' }
       locator: { css: '#my-btn' }
 
-YAML example (nested shadow hosts)::
+YAML example -- nested Shadow DOM::
 
     DeepElement:
       class: okw_web_selenium.widgets.webse_label.WebSe_Label
@@ -20,8 +22,15 @@ YAML example (nested shadow hosts)::
         - { css: '#inner-host' }
       locator: { css: '.target' }
 
-Note: Only CSS selectors work inside Shadow DOM.
-XPath is not supported by the browser's Shadow Root API.
+YAML example -- iFrame (XPath and CSS supported)::
+
+    EmailInput:
+      class: okw_web_selenium.widgets.webse_textfield.WebSe_TextField
+      iframe: { id: email-subscribe }
+      locator: { id: email }
+
+Note: Only CSS selectors work inside Shadow DOM (browser limitation).
+iFrames support both CSS and XPath -- no restrictions.
 """
 
 
@@ -49,5 +58,32 @@ class ShadowLocator:
     def __repr__(self):
         return (
             f"ShadowLocator(hosts={self.shadow_hosts}, "
+            f"locator={self.element_locator})"
+        )
+
+
+class IFrameLocator:
+    """Transparent wrapper: iframe locator + element locator.
+
+    Created automatically by ``WebSe_Base.__init__`` when the YAML
+    entry contains an ``iframe`` key.  The adapter switches into the
+    frame before finding the element and switches back to
+    ``default_content`` afterwards.
+
+    Unlike Shadow DOM, iFrames support both CSS and XPath selectors.
+    """
+
+    __slots__ = ("iframe_locator", "element_locator")
+
+    def __init__(self, iframe_locator, element_locator):
+        self.iframe_locator = iframe_locator
+        self.element_locator = element_locator
+
+    def __bool__(self):
+        return bool(self.element_locator)
+
+    def __repr__(self):
+        return (
+            f"IFrameLocator(iframe={self.iframe_locator}, "
             f"locator={self.element_locator})"
         )
