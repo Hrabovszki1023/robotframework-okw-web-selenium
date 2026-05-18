@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.4.2] - 2026-05-18
+
+### Features
+- **Drag & Drop support**: `drag_start()`, `drag_over()`, `drop()`,
+  `drag_to()` in `SeleniumWebAdapter`.
+- JS-based HTML5 drag event simulation (`DragEvent` + `DataTransfer`)
+  — works universally for all `draggable="true"` elements.
+- Collect-then-execute: adapter holds source and intermediates,
+  `_exec_drag()` fires the complete event sequence atomically.
+- `WebSe_Base`: `okw_drag_start()`, `okw_drag_over()`, `okw_drop()`
+  with pre-condition sync.
+
 ## [0.4.1] - 2026-05-17
 
 ### Highlights
