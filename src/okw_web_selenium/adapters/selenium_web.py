@@ -198,6 +198,14 @@ class SeleniumWebAdapter:
     def _resolve(self, locator_dict):
         if not locator_dict:
             raise ValueError("Locator missing")
+        # Shadow DOM: navigate through shadow roots, return WebElement
+        from okw_web_selenium.shadow_locator import ShadowLocator
+        if isinstance(locator_dict, ShadowLocator):
+            return self._resolve_shadow(locator_dict)
+        # WebElement passthrough (e.g. from shadow resolution)
+        from selenium.webdriver.remote.webelement import WebElement
+        if isinstance(locator_dict, WebElement):
+            return locator_dict
         if isinstance(locator_dict, str):
             return locator_dict
         if isinstance(locator_dict, dict):
@@ -206,6 +214,43 @@ class SeleniumWebAdapter:
             key, value = list(locator_dict.items())[0]
             return f"{key}:{value}"
         raise TypeError(f"Unsupported locator format: {locator_dict}")
+
+    def _resolve_shadow(self, shadow_loc):
+        """Navigate through shadow host chain and find element via CSS.
+
+        Args:
+            shadow_loc: ``ShadowLocator`` with ``shadow_hosts`` (list of
+                locator dicts) and ``element_locator`` (dict).
+
+        Returns:
+            WebElement inside the deepest shadow root.
+
+        Raises:
+            ValueError: if element_locator uses a non-CSS strategy.
+        """
+        from selenium.webdriver.common.by import By
+
+        driver = self.sl.driver
+        root = driver
+
+        for host_loc in shadow_loc.shadow_hosts:
+            host_css = list(host_loc.values())[0]
+            if root is driver:
+                host_el = driver.find_element(By.CSS_SELECTOR, host_css)
+            else:
+                host_el = root.find_element(By.CSS_SELECTOR, host_css)
+            root = host_el.shadow_root
+
+        # Validate: only CSS works inside Shadow DOM
+        loc = shadow_loc.element_locator
+        strategy = list(loc.keys())[0]
+        if strategy not in ("css", "css selector"):
+            raise ValueError(
+                f"Shadow DOM only supports CSS selectors, got: '{strategy}'. "
+                f"XPath is not supported inside Shadow DOM (browser limitation)."
+            )
+        css_sel = list(loc.values())[0]
+        return root.find_element(By.CSS_SELECTOR, css_sel)
 
     # ------------------------------------------------------------------
     # Drag & Drop (collect → execute pattern)

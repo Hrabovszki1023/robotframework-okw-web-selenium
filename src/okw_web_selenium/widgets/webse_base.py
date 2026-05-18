@@ -15,6 +15,10 @@ class WebSe_Base(OkwWidget):
     """Basis fuer alle Selenium-Web-Widgets."""
 
     def __init__(self, adapter, locator, **options):
+        shadow_host = options.pop('shadow_host', None)
+        if shadow_host and locator:
+            from okw_web_selenium.shadow_locator import ShadowLocator
+            locator = ShadowLocator(shadow_host, locator)
         super().__init__(adapter, locator, **options)
         self.sl = adapter.sl  # SeleniumLibrary-Instanz
 
