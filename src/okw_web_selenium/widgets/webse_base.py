@@ -58,6 +58,22 @@ class WebSe_Base(OkwWidget):
             pass
 
     # ------------------------------------------------------------------
+    # Drag & Drop (collect → execute pattern)
+    # DragStart/DragOver only collect — Drop executes atomically.
+    # ------------------------------------------------------------------
+    def okw_drag_start(self):
+        self._wait_before('read')
+        self.adapter.drag_start(self.locator)
+
+    def okw_drag_over(self):
+        self._wait_before('read')
+        self.adapter.drag_over(self.locator)
+
+    def okw_drop(self):
+        self._wait_before('read')
+        self.adapter.drop(self.locator)
+
+    # ------------------------------------------------------------------
     # Werte lesen (gemeinsam)
     # ------------------------------------------------------------------
     def okw_get_text(self) -> str:

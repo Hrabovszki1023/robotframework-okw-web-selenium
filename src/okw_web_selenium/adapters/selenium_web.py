@@ -207,6 +207,82 @@ class SeleniumWebAdapter:
             return f"{key}:{value}"
         raise TypeError(f"Unsupported locator format: {locator_dict}")
 
+    # ------------------------------------------------------------------
+    # Drag & Drop (collect → execute pattern)
+    #
+    # DragStart / DragOver only collect element references.
+    # Drop executes the entire drag sequence atomically via JS.
+    # ------------------------------------------------------------------
+    _drag_source = None        # WebElement: source of the drag
+    _drag_intermediates = None  # list[WebElement]: intermediate targets
+
+    def drag_start(self, locator):
+        """Collect the source element — no events fired yet."""
+        self._drag_source = self.sl.get_webelement(self._resolve(locator))
+        self._drag_intermediates = []
+
+    def drag_over(self, locator):
+        """Collect an intermediate target — no events fired yet."""
+        if self._drag_source is None:
+            raise RuntimeError("drag_over() called without active drag — call drag_start() first.")
+        el = self.sl.get_webelement(self._resolve(locator))
+        self._drag_intermediates.append(el)
+
+    def drop(self, locator):
+        """Execute the entire drag sequence atomically via JS events."""
+        if self._drag_source is None:
+            raise RuntimeError("drop() called without active drag — call drag_start() first.")
+        target = self.sl.get_webelement(self._resolve(locator))
+        intermediates = self._drag_intermediates or []
+        self._exec_drag(self._drag_source, intermediates, target)
+        self._drag_source = None
+        self._drag_intermediates = None
+
+    def drag_to(self, source_locator, target_locator):
+        """Shortcut: drag source directly to target (no intermediates)."""
+        src = self.sl.get_webelement(self._resolve(source_locator))
+        tgt = self.sl.get_webelement(self._resolve(target_locator))
+        self._exec_drag(src, [], tgt)
+
+    def _exec_drag(self, source, intermediates, target):
+        """Fire the complete HTML5 drag event sequence via JavaScript.
+
+        Event order: dragstart(src) → [dragenter+dragover(mid)]* →
+        dragenter+dragover+drop(tgt) → dragend(src).
+        """
+        self.sl.driver.execute_script("""
+            var src = arguments[0];
+            var mids = arguments[1];
+            var tgt = arguments[2];
+
+            var dt = new DataTransfer();
+            dt.setData('text/plain', src.id || '');
+
+            function fire(el, type) {
+                el.dispatchEvent(new DragEvent(type, {
+                    bubbles: true, cancelable: true, dataTransfer: dt
+                }));
+            }
+
+            // 1. dragstart on source
+            fire(src, 'dragstart');
+
+            // 2. dragenter + dragover on each intermediate
+            for (var i = 0; i < mids.length; i++) {
+                fire(mids[i], 'dragenter');
+                fire(mids[i], 'dragover');
+                fire(mids[i], 'dragleave');
+            }
+
+            // 3. drop on target
+            fire(tgt, 'dragenter');
+            fire(tgt, 'dragover');
+            fire(tgt, 'drop');
+
+            // 4. dragend on source
+            fire(src, 'dragend');
+        """, source, intermediates, target)
+
     def focus(self, locator):
         el = self.sl.get_webelement(self._resolve(locator))
         try:
