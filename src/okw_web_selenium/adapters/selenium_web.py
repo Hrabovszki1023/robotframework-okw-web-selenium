@@ -297,6 +297,14 @@ class SeleniumWebAdapter:
 
         return self._resolve_dict(iframe_loc.element_locator)
 
+    def get_context_screenshot_base64(self, locator_dict) -> "str | None":
+        try:
+            resolved = self._resolve(locator_dict)
+            el = self.sl.get_webelement(resolved)
+            return el.screenshot_as_base64
+        except Exception:
+            return None
+
     def _resolve_dict(self, locator_dict):
         """Resolve a plain locator dict to a SeleniumLibrary locator string."""
         if isinstance(locator_dict, str):
