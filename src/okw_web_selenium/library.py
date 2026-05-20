@@ -48,7 +48,7 @@ class OkwWebSeleniumLibrary(OKW4RobotLibrary, WebKeywords):
     """
 
     ROBOT_LIBRARY_DOC_FORMAT = 'ROBOT'
-    ROBOT_LIBRARY_VERSION = '0.3.0'
+    ROBOT_LIBRARY_VERSION = '0.4.3'
 
     def __init__(self):
         """Initialisiert die OkwWebSeleniumLibrary."""
