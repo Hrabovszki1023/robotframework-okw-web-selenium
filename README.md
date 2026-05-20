@@ -107,6 +107,38 @@ Full reference: [docs/widgets_common.md](docs/widgets_common.md)
 
 ---
 
+## Web-Only Keywords
+
+These keywords are available only with `OkwWebSeleniumLibrary` (not in the
+core `OKW4RobotLibrary`):
+
+| Keyword | Description |
+|---------|-------------|
+| `ExecuteJS` | Execute raw JavaScript in the browser context |
+| `RemoveAds` | Remove ad iframes/overlays via JS + MutationObserver |
+
+### RemoveAds
+
+Removes ad elements from the current page. Without arguments, targets
+common Google Ads selectors. With arguments, each argument is a CSS
+selector for elements to remove.
+
+A `MutationObserver` is installed to automatically remove ads that load
+asynchronously after the initial page load. One call per page is enough.
+
+```robot
+# Default (Google Ads):
+OnFailIgnoreNOISE    RemoveAds
+
+# Custom selectors:
+OnFailIgnoreNOISE    RemoveAds    div.custom-banner    iframe[src*="ad-network"]
+```
+
+Best used with `OnFailIgnoreNOISE` in test setup — if the page has no ads,
+the keyword simply removes nothing and continues.
+
+---
+
 ## Documentation
 
 - [docs/README.md](docs/README.md) – Documentation overview

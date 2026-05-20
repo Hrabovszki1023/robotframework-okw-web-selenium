@@ -66,6 +66,16 @@ class SeleniumWebAdapter:
 
     @staticmethod
     def _get_locator_dir() -> str:
+        try:
+            source = BuiltIn().get_variable_value("${SUITE SOURCE}")
+            if source:
+                suite_dir = os.path.dirname(source) if os.path.isfile(source) else source
+                for ancestor in [suite_dir, os.path.dirname(suite_dir), os.path.dirname(os.path.dirname(suite_dir))]:
+                    candidate = os.path.join(ancestor, "locators")
+                    if os.path.isdir(candidate):
+                        return candidate
+        except Exception:
+            pass
         locators = os.path.join(os.getcwd(), "locators")
         if os.path.isdir(locators):
             return locators

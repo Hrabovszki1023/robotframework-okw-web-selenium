@@ -45,6 +45,12 @@ Network & events
 - Dispatch event: `document.querySelector('#name')?.dispatchEvent(new Event('change', {bubbles:true}));`
 - Trigger input: `const el=document.querySelector('#name'); if(el){ el.value='Max'; el.dispatchEvent(new Event('input',{bubbles:true})); }`
 
+Ad removal
+- Remove Google Ad iframes: `document.querySelectorAll('iframe[src*="googlesyndication"], ins.adsbygoogle').forEach(el => el.remove());`
+- Note: For ad removal, prefer the dedicated `RemoveAds` keyword — it
+  handles defaults, custom selectors, and installs a MutationObserver
+  for asynchronously loaded ads.
+
 Notes
 - Keep snippets idempotent and short; prefer `return ...` when you want a value back.
 - These run in the page context and must obey the site's CSP and same‑origin policy.

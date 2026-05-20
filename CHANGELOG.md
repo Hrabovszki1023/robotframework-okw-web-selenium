@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.4.3] - 2026-05-20
+
+### Features
+- **RemoveAds** keyword: removes ad iframes and overlay elements from the
+  current page via JavaScript. Without arguments, targets common Google Ads
+  selectors (`googlesyndication`, `doubleclick`, `adsbygoogle`). With
+  arguments, each argument is a custom CSS selector. Installs a
+  `MutationObserver` that automatically removes ads as they load
+  asynchronously. Useful wrapped with `OnFailIgnoreNOISE` in test setup.
+- **Browser options via YAML**: `SeleniumWebAdapter` now supports `options`
+  config in `__self__` for Chrome/Firefox/Edge — `arguments`, `extensions`,
+  and `preferences`.
+- **Extension path resolution**: extensions are resolved relative to the
+  `locators/` directory (found via `${SUITE SOURCE}`).
+
 ## [0.4.2] - 2026-05-18
 
 ### Features

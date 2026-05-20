@@ -18,6 +18,37 @@ Dieses Projekt ermöglicht es, mit einem einheitlichen Satz von Schlüsselwörte
 - Placeholder-Keywords: [docs/keywords_placeholder.md](docs/keywords_placeholder.md)
 - Tooltip-Keywords: [docs/keywords_tooltip.md](docs/keywords_tooltip.md)
 - ExecuteJS Snippets (Web, JS One‑Liners): [docs/executejs-snippets.md](docs/executejs-snippets.md)
+
+---
+
+## Web-spezifische Keywords
+
+Diese Keywords sind nur mit `OkwWebSeleniumLibrary` verfuegbar:
+
+| Keyword | Beschreibung |
+|---------|-------------|
+| `ExecuteJS` | Rohes JavaScript im Browser-Kontext ausfuehren |
+| `RemoveAds` | Werbe-Iframes/Overlays per JS + MutationObserver entfernen |
+
+### RemoveAds
+
+Entfernt Werbeelemente von der aktuellen Seite. Ohne Argumente werden
+gaengige Google-Ads-Selektoren verwendet. Mit Argumenten wird jedes
+Argument als CSS-Selektor fuer zu entfernende Elemente interpretiert.
+
+Ein `MutationObserver` wird installiert, der Ads automatisch entfernt,
+sobald sie asynchron nachgeladen werden. Ein Aufruf pro Seite genuegt.
+
+```robot
+# Standard (Google Ads):
+OnFailIgnoreNOISE    RemoveAds
+
+# Projektspezifische Selektoren:
+OnFailIgnoreNOISE    RemoveAds    div.custom-banner    iframe[src*="ad-network"]
+```
+
+Am besten mit `OnFailIgnoreNOISE` im Test-Setup verwenden — wenn die Seite
+keine Ads hat, entfernt das Keyword einfach nichts und laeuft weiter.
 - OKW Parameter und Timeouts: [docs/okw_parameters.md](docs/okw_parameters.md)
 - Synchronisations-/Delay-Strategie: [docs/synchronization_strategy.md](docs/synchronization_strategy.md)
 
