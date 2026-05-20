@@ -1,13 +1,75 @@
+import os
+
 from SeleniumLibrary import SeleniumLibrary
 from robot.libraries.BuiltIn import BuiltIn
 
 class SeleniumWebAdapter:
 
-    def __init__(self, browser):
+    def __init__(self, browser, options=None):
         self.browser = browser
         self._shutdown_called = False
         self.sl = SeleniumLibrary()
-        self._browser_index = self.sl.open_browser("about:blank", browser=self.browser)
+        browser_options = self._build_options(options) if options else None
+        self._browser_index = self.sl.open_browser(
+            "about:blank", browser=self.browser, options=browser_options
+        )
+
+    def _build_options(self, options_config):
+        """Build browser-specific Options from YAML config.
+
+        Supported keys in ``options_config``:
+        - ``arguments``: list of CLI arguments (e.g. ``--start-maximized``)
+        - ``extensions``: list of extension files (``.crx`` for Chrome,
+          ``.xpi`` for Firefox). Paths are resolved relative to the
+          locator directory (``${OKW_LOCATOR_DIR}``).
+        - ``preferences``: dict of browser preferences
+        """
+        br = self.browser.lower()
+        if br in ("chrome", "googlechrome", "gc", "headlesschrome"):
+            from selenium.webdriver.chrome.options import Options
+        elif br in ("firefox", "ff", "headlessfirefox"):
+            from selenium.webdriver.firefox.options import Options
+        elif br in ("edge",):
+            from selenium.webdriver.edge.options import Options
+        else:
+            from robot.api import logger
+            logger.warn(
+                f"Browser '{self.browser}' has no known Options class — "
+                f"ignoring options config."
+            )
+            return None
+
+        opts = Options()
+
+        for arg in options_config.get("arguments", []):
+            opts.add_argument(str(arg))
+
+        locator_dir = self._get_locator_dir()
+        for ext_path in options_config.get("extensions", []):
+            resolved = ext_path if os.path.isabs(ext_path) else os.path.join(locator_dir, ext_path)
+            if not os.path.isfile(resolved):
+                raise FileNotFoundError(
+                    f"Extension not found: '{resolved}' "
+                    f"(from '{ext_path}', locator dir: '{locator_dir}')"
+                )
+            opts.add_extension(resolved)
+
+        for key, value in options_config.get("preferences", {}).items():
+            if br in ("firefox", "ff", "headlessfirefox"):
+                opts.set_preference(key, value)
+            else:
+                opts.add_experimental_option(
+                    "prefs", {**getattr(opts, '_experimental_options', {}).get("prefs", {}), key: value}
+                )
+
+        return opts
+
+    @staticmethod
+    def _get_locator_dir() -> str:
+        locators = os.path.join(os.getcwd(), "locators")
+        if os.path.isdir(locators):
+            return locators
+        return os.getcwd()
 
     def shutdown(self):
         if self._shutdown_called:
