@@ -15,6 +15,15 @@ from .keywords.web_keywords import WebKeywords
 class OkwWebSeleniumLibrary(OKW4RobotLibrary, WebKeywords):
     """Selenium-based GUI test automation with OKW4Robot.
 
+    = Runnable Examples =
+
+    Complete ``.robot`` examples for this library are available in the
+    [https://github.com/Hrabovszki1023/okw-examples/tree/master/selenium|okw-examples]
+    repository. Install and run:
+
+    | pip install -r requirements.txt
+    | robot selenium/
+
     = Overview =
 
     ``OkwWebSeleniumLibrary`` extends ``OKW4RobotLibrary`` with Selenium-specific
