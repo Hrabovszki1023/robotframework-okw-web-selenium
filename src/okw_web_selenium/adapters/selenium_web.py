@@ -9,7 +9,19 @@ class SeleniumWebAdapter:
         self.browser = browser
         self._shutdown_called = False
         self.sl = SeleniumLibrary()
-        browser_options = self._build_options(options) if options else None
+        headless = os.environ.get("OKW_BROWSER_HEADLESS", "").lower() in ("1", "true", "yes")
+        if headless or options:
+            options = options or {}
+            if headless:
+                args = list(options.get("arguments", []))
+                if "--headless" not in args and "--headless=new" not in args:
+                    args.append("--headless")
+                    args.append("--no-sandbox")
+                    args.append("--disable-gpu")
+                options["arguments"] = args
+            browser_options = self._build_options(options)
+        else:
+            browser_options = None
         self._browser_index = self.sl.open_browser(
             "about:blank", browser=self.browser, options=browser_options
         )
