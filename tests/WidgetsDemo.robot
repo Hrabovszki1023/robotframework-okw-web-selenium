@@ -125,10 +125,10 @@ OK Aggregates Values In Status
     VerifyValueWCM  Status      *"Verheiratet" = "Checked"*
     Teardown Widgets Demo
 
-VerifyExist On Status
+VerifyExists On Status
     Setup Widgets Demo
     SelectWindow   WidgetsDemo
-    VerifyExist     Status    YES
+    VerifyExists     Status    YES
     Teardown Widgets Demo
 
 $IGNORE Behavior: SetValue Does Nothing

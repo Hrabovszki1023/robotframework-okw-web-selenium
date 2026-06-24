@@ -21,9 +21,9 @@ Teardown Widgets Demo
 Exists YES And NO
     Setup Widgets Demo
     SelectWindow   WidgetsDemo
-    VerifyExist   Name         YES
+    VerifyExists   Name         YES
     ExecuteJS    document.querySelector('[data-testid="ta-anmerkung"]').remove();
-    VerifyExist   Anmerkung    NO
+    VerifyExists   Anmerkung    NO
     Teardown Widgets Demo
 
 

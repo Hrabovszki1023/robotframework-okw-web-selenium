@@ -40,7 +40,7 @@ Widget Existenzprüfung
     Setup Login Test
 
     SelectWindow  LoginDialog
-    VerifyExist    DoesNotExist    NO
+    VerifyExists    DoesNotExist    NO
 
     StopHost
 
