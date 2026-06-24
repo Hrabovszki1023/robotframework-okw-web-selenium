@@ -23,6 +23,11 @@ jobs:
           . venv/bin/activate
           robot --outputdir results/contract tests/contract.robot
 
+      - name: Run table token tests
+        run: |
+          . venv/bin/activate
+          robot --outputdir results/tokens tests/TableTokens.robot
+
       - name: Run widget tests (headless Chrome)
         run: |
           . venv/bin/activate
