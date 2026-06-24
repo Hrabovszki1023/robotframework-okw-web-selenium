@@ -46,7 +46,7 @@ Library    okw_web_selenium.library.OkwWebSeleniumLibrary
 ...    VerifyAttributeREGX
 
 # --- Verify: Generic / Focus ---
-...    VerifyExist
+...    VerifyExists
 ...    VerifyHasFocus
 
 # --- Lists ---
