@@ -18,6 +18,7 @@ class SeleniumWebAdapter:
                     args.append("--headless")
                     args.append("--no-sandbox")
                     args.append("--disable-gpu")
+                    args.append("--window-size=1920,1080")
                 options["arguments"] = args
             browser_options = self._build_options(options)
         else:
