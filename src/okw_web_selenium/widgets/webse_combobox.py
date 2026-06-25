@@ -65,17 +65,16 @@ class WebSe_ComboBox(WebSe_Base):
             self.adapter.press_keys(None, key)
 
     def okw_get_value(self) -> str:
-        # Input-Value bevorzugen, Fallback auf selektiertes Label
-        try:
-            val = self.adapter.get_value(self.locator)
-            if val:
-                return val
-        except Exception:
-            pass
         try:
             labels = self.adapter.get_selected_list_labels(self.locator)
             if labels:
                 return labels[0]
+        except Exception:
+            pass
+        try:
+            val = self.adapter.get_value(self.locator)
+            if val:
+                return val
         except Exception:
             pass
         return ""
