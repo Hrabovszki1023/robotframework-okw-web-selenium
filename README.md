@@ -1,13 +1,19 @@
 # OKW Web Selenium
 
-Selenium WebDriver plugin for [OKW4Robot](https://github.com/Hrabovszki1023/robotframework-okw4robot) —
-the driver-agnostic keyword library for [Robot Framework](https://robotframework.org/).
+[![PyPI](https://img.shields.io/pypi/v/robotframework-okw-web-selenium)](https://pypi.org/project/robotframework-okw-web-selenium/)
+[![Python](https://img.shields.io/pypi/pyversions/robotframework-okw-web-selenium)](https://pypi.org/project/robotframework-okw-web-selenium/)
 
-This package provides `WebSe_*` widget implementations that translate
-OKW keywords (`SetValue`, `ClickOn`, `VerifyValue`, ...) into Selenium
-WebDriver calls for Chrome, Firefox, Edge and other browsers.
+Selenium WebDriver plugin for [OKW4Robot](https://github.com/Hrabovszki1023/robotframework-okw4robot) — the driver-agnostic keyword library for [Robot Framework](https://robotframework.org/).
 
 > **Deutsche Version:** [README_de.md](README_de.md)
+
+## Signal vs. NOISE
+
+| Signal (your test) | NOISE (hidden in YAML + widgets) |
+|---|---|
+| `SetValue Username admin` | `driver.find_element(By.ID, "user_input").clear(); .send_keys("admin")` |
+| `ClickOn Login` | `WebDriverWait(...).until(EC.element_to_be_clickable(...)).click()` |
+| `VerifyValue Status Logged in` | Polling loop, timeout, element lookup by CSS/XPath/ID |
 
 ---
 
@@ -181,6 +187,14 @@ robotframework-okw-web-selenium/
 ```
 
 ---
+
+## Runnable Examples
+
+[okw-examples/selenium/](https://github.com/Hrabovszki1023/okw-examples/tree/main/selenium/) — login, dynamic table, SetContext, tokens.
+
+## Handbuch
+
+[OKW4Robot Handbuch](https://hrabovszki1023.github.io/okw-examples/) — step-by-step guide (German).
 
 ## License
 
