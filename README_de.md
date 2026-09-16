@@ -173,16 +173,20 @@ ClickOn         AddToCart
    im `__context__`-Locator.
 2. Kind-Widgets nutzen relative Locatoren (`.//...`) — sie sind auf das
    gematchte Context-Element beschränkt.
-3. `SelectWindow` löscht den Kontext automatisch.
 
 **Regeln:**
 - `__context__` ist ein reservierter Schlüssel — wie `__self__`.
 - Platzhalter nutzen `{Name}`-Syntax, ersetzt über `str.format()`.
 - Mehrere Platzhalter: `SetContext Tabellenzeile Zeile=A Spalte=3`.
-- Context-Locatoren müssen **XPath** verwenden (CSS unterstützt keine
-  Textauswahl und keine relative Pfadkomposition).
+- **Nur XPath** — sowohl der `__context__`-Locator als auch die Kind-Locatoren
+  müssen XPath verwenden. CSS-Selektoren können keinen Textinhalt matchen
+  (`text()`) und unterstützen keine relative Pfadkomposition (`.//...`).
+  Wenn ein Widget innerhalb einer Context-Gruppe einen CSS-Locator verwendet,
+  wird der Kontext stillschweigend ignoriert und das Widget ohne Scoping
+  aufgelöst.
 - Kind-Locatoren nutzen relatives XPath (`.//...`), beschränkt auf das
   Context-Element.
+- `SelectWindow` löscht den Kontext automatisch.
 
 ---
 

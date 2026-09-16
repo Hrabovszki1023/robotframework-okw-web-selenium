@@ -172,15 +172,18 @@ ClickOn         AddToCart
    in the `__context__` locator.
 2. Child widgets use relative locators (`.//...`) — they are scoped to the
    matched context element.
-3. `SelectWindow` clears the context automatically.
 
 **Rules:**
 - `__context__` is a reserved key — like `__self__`.
 - Placeholders use `{Name}` syntax, replaced via `str.format()`.
 - Multiple placeholders: `SetContext TableRow Row=A Col=3`.
-- Context locators must use **XPath** (CSS does not support text selection
-  or relative path composition).
+- **XPath only** — both the `__context__` locator and its child locators must
+  use XPath. CSS selectors cannot match text content (`text()`) and do not
+  support relative path composition (`.//...`). If a widget inside a context
+  group uses a CSS locator, the context is silently ignored and the widget
+  is resolved without scoping.
 - Child locators use relative XPath (`.//...`) scoped to the context element.
+- `SelectWindow` clears the context automatically.
 
 ---
 
