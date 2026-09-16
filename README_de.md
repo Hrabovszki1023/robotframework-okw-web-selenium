@@ -1,6 +1,10 @@
-# OKW4Robot
+# OKW Web Selenium
 
-Treiberagnostische Keyword-Architektur fuer das [Robot Framework](https://robotframework.org/).
+[![PyPI](https://img.shields.io/pypi/v/robotframework-okw-web-selenium)](https://pypi.org/project/robotframework-okw-web-selenium/)
+[![Python](https://img.shields.io/pypi/pyversions/robotframework-okw-web-selenium)](https://pypi.org/project/robotframework-okw-web-selenium/)
+[![License](https://img.shields.io/badge/License-OKW_Community-orange.svg)](LICENSE)
+
+Selenium-WebDriver-Plugin für [OKW4Robot](https://github.com/Hrabovszki1023/robotframework-okw4robot) — OKW-Keywords für Web-Applikationen.
 
 Dieses Projekt ermöglicht es, mit einem einheitlichen Satz von Schlüsselwörtern Tests gegen verschiedene GUI-Technologien (Web, Swing etc.) durchzuführen.
 

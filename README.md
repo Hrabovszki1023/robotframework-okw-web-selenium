@@ -2,6 +2,7 @@
 
 [![PyPI](https://img.shields.io/pypi/v/robotframework-okw-web-selenium)](https://pypi.org/project/robotframework-okw-web-selenium/)
 [![Python](https://img.shields.io/pypi/pyversions/robotframework-okw-web-selenium)](https://pypi.org/project/robotframework-okw-web-selenium/)
+[![License](https://img.shields.io/badge/License-OKW_Community-orange.svg)](LICENSE)
 
 Selenium WebDriver plugin for [OKW4Robot](https://github.com/Hrabovszki1023/robotframework-okw4robot) — the driver-agnostic keyword library for [Robot Framework](https://robotframework.org/).
 
