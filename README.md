@@ -127,6 +127,63 @@ VerifyValue  Amount        €99.00
 
 ---
 
+## SetContext (Repeating Structures)
+
+Web applications often contain repeating elements — product cards, table
+rows, list items — that share the same internal structure. `SetContext`
+scopes subsequent widget operations to one instance, identified by a
+placeholder value. No need to define each instance separately in YAML.
+
+### YAML
+
+```yaml
+MyApp:
+  Products:
+    ProductCard:
+      __context__:
+        locator: { xpath: '//div[@class="product"][.//h3[text()="{ProductName}"]]' }
+      Name:
+        class: okw_web_selenium.widgets.webse_label.WebSe_Label
+        locator: { xpath: './/h3' }
+      Price:
+        class: okw_web_selenium.widgets.webse_label.WebSe_Label
+        locator: { xpath: './/span[@class="price"]' }
+      AddToCart:
+        class: okw_web_selenium.widgets.webse_button.WebSe_Button
+        locator: { xpath: './/button[contains(@class,"add-to-cart")]' }
+```
+
+### Test
+
+```robot
+SelectWindow    Products
+SetContext      ProductCard    Sauce Labs Backpack
+VerifyValue     Price          $29.99
+ClickOn         AddToCart
+
+SetContext      ProductCard    Sauce Labs Bike Light
+VerifyValue     Price          $9.99
+ClickOn         AddToCart
+```
+
+**How it works:**
+
+1. `SetContext ProductCard Sauce Labs Backpack` replaces `{ProductName}`
+   in the `__context__` locator.
+2. Child widgets use relative locators (`.//...`) — they are scoped to the
+   matched context element.
+3. `SelectWindow` clears the context automatically.
+
+**Rules:**
+- `__context__` is a reserved key — like `__self__`.
+- Placeholders use `{Name}` syntax, replaced via `str.format()`.
+- Multiple placeholders: `SetContext TableRow Row=A Col=3`.
+- Context locators must use **XPath** (CSS does not support text selection
+  or relative path composition).
+- Child locators use relative XPath (`.//...`) scoped to the context element.
+
+---
+
 ## Widget Classes
 
 | Class | HTML Elements | Key Methods |

@@ -127,6 +127,65 @@ VerifyValue  Amount        €99.00
 
 ---
 
+## SetContext (Wiederholende Strukturen)
+
+Webanwendungen enthalten häufig wiederholende Elemente — Produktkarten,
+Tabellenzeilen, Listeneinträge — die intern dieselbe Struktur haben.
+`SetContext` grenzt nachfolgende Widget-Operationen auf eine Instanz ein,
+identifiziert durch einen Platzhalter-Wert. Jede Instanz muss nicht
+einzeln im YAML definiert werden.
+
+### YAML
+
+```yaml
+MyApp:
+  Products:
+    ProductCard:
+      __context__:
+        locator: { xpath: '//div[@class="product"][.//h3[text()="{ProductName}"]]' }
+      Name:
+        class: okw_web_selenium.widgets.webse_label.WebSe_Label
+        locator: { xpath: './/h3' }
+      Price:
+        class: okw_web_selenium.widgets.webse_label.WebSe_Label
+        locator: { xpath: './/span[@class="price"]' }
+      AddToCart:
+        class: okw_web_selenium.widgets.webse_button.WebSe_Button
+        locator: { xpath: './/button[contains(@class,"add-to-cart")]' }
+```
+
+### Test
+
+```robot
+SelectWindow    Products
+SetContext      ProductCard    Sauce Labs Backpack
+VerifyValue     Price          $29.99
+ClickOn         AddToCart
+
+SetContext      ProductCard    Sauce Labs Bike Light
+VerifyValue     Price          $9.99
+ClickOn         AddToCart
+```
+
+**So funktioniert es:**
+
+1. `SetContext ProductCard Sauce Labs Backpack` ersetzt `{ProductName}`
+   im `__context__`-Locator.
+2. Kind-Widgets nutzen relative Locatoren (`.//...`) — sie sind auf das
+   gematchte Context-Element beschränkt.
+3. `SelectWindow` löscht den Kontext automatisch.
+
+**Regeln:**
+- `__context__` ist ein reservierter Schlüssel — wie `__self__`.
+- Platzhalter nutzen `{Name}`-Syntax, ersetzt über `str.format()`.
+- Mehrere Platzhalter: `SetContext Tabellenzeile Zeile=A Spalte=3`.
+- Context-Locatoren müssen **XPath** verwenden (CSS unterstützt keine
+  Textauswahl und keine relative Pfadkomposition).
+- Kind-Locatoren nutzen relatives XPath (`.//...`), beschränkt auf das
+  Context-Element.
+
+---
+
 ## Widget-Klassen
 
 | Klasse | HTML-Elemente | Wichtige Methoden |
