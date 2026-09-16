@@ -90,6 +90,43 @@ MyApp:
 
 ---
 
+## iFrame-Unterstützung
+
+Wenn ein Widget innerhalb eines `<iframe>` liegt, wird das `iframe`-Attribut
+im YAML-Eintrag ergänzt. Der Adapter schaltet transparent in den Frame um,
+bevor das Element angesprochen wird, und schaltet automatisch zurück, wenn
+das nächste Widget außerhalb des Frames liegt.
+
+```yaml
+MyApp:
+  PaymentPage:
+    CardNumber:
+      class: okw_web_selenium.widgets.webse_textfield.WebSe_TextField
+      locator: { id: card-number }
+      iframe: { css: "iframe#payment-frame" }
+    Amount:
+      class: okw_web_selenium.widgets.webse_label.WebSe_Label
+      locator: { css: ".total-amount" }
+```
+
+Der Testcode bleibt unverändert — kein manuelles `switch_to.frame()`:
+
+```robot
+SetValue     CardNumber    4111111111111111
+VerifyValue  Amount        €99.00
+```
+
+`CardNumber` liegt im iframe → der Adapter schaltet hinein.
+`Amount` liegt außerhalb → der Adapter schaltet zurück zu `default_content`.
+
+**Regeln:**
+- `iframe` akzeptiert dieselben Locator-Strategien wie `locator` (css, xpath, id, ...).
+- Verschachtelte iframes werden nicht unterstützt — nur eine Ebene tief.
+- Der Wechsel wird pro Adapter verfolgt: Wenn zwei aufeinanderfolgende Widgets
+  denselben iframe nutzen, wird nur einmal gewechselt.
+
+---
+
 ## Widget-Klassen
 
 | Klasse | HTML-Elemente | Wichtige Methoden |
