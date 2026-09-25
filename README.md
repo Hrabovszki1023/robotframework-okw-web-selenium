@@ -6,7 +6,7 @@
 
 Selenium WebDriver plugin for [OKW4Robot](https://github.com/Hrabovszki1023/robotframework-okw4robot) — the driver-agnostic keyword library for [Robot Framework](https://robotframework.org/).
 
-> **Deutsche Version:** [README_de.md](README_de.md)
+> **Deutsche Version:** [README.de.md](README.de.md)
 
 ## Signal vs. NOISE
 
