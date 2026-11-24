@@ -2,7 +2,7 @@
 
 [![PyPI](https://img.shields.io/pypi/v/robotframework-okw-web-selenium)](https://pypi.org/project/robotframework-okw-web-selenium/)
 [![Python](https://img.shields.io/pypi/pyversions/robotframework-okw-web-selenium)](https://pypi.org/project/robotframework-okw-web-selenium/)
-[![License](https://img.shields.io/badge/License-OKW_Community-orange.svg)](LICENSE)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 
 Selenium WebDriver plugin for [OKW4Robot](https://github.com/Hrabovszki1023/robotframework-okw4robot) — the driver-agnostic keyword library for [Robot Framework](https://robotframework.org/).
 
@@ -305,6 +305,4 @@ The LLM produces a ready-to-run `.robot` file.
 
 ## License
 
-- **Community** (non-commercial): see [LICENSE](LICENSE)
-- **Commercial**: see [COMMERCIAL_LICENSE.md](COMMERCIAL_LICENSE.md)
-- **FAQ**: [docs/license_faq.md](docs/license_faq.md)
+Apache-2.0. See [LICENSE](LICENSE) for details.

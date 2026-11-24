@@ -2,7 +2,7 @@
 
 [![PyPI](https://img.shields.io/pypi/v/robotframework-okw-web-selenium)](https://pypi.org/project/robotframework-okw-web-selenium/)
 [![Python](https://img.shields.io/pypi/pyversions/robotframework-okw-web-selenium)](https://pypi.org/project/robotframework-okw-web-selenium/)
-[![License](https://img.shields.io/badge/License-OKW_Community-orange.svg)](LICENSE)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 
 Selenium-WebDriver-Plugin für [OKW4Robot](https://github.com/Hrabovszki1023/robotframework-okw4robot) — die treiberunabhängige Keyword-Bibliothek für [Robot Framework](https://robotframework.org/).
 
@@ -309,6 +309,4 @@ Die KI erzeugt eine lauffähige `.robot`-Datei.
 
 ## Lizenz
 
-- **Community** (nicht-kommerziell): siehe [LICENSE](LICENSE)
-- **Kommerziell**: siehe [COMMERCIAL_LICENSE.md](COMMERCIAL_LICENSE.md)
-- **FAQ**: [docs/license_faq.md](docs/license_faq.md)
+Apache-2.0. Siehe [LICENSE](LICENSE) für Details.
