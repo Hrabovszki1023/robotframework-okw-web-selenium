@@ -1,10 +1,10 @@
 [build-system]
-requires = ["setuptools>=65", "wheel"]
+requires = ["setuptools>=77", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "robotframework-okw-web-selenium"
-version = "0.4.7"
+version = "0.4.8"
 description = "Selenium driver for OKW4Robot - Web GUI test automation with Chrome, Firefox and more."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -17,7 +17,8 @@ dependencies = [
 authors = [
   { name = "Zoltán Hrabovszki" }
 ]
-license = { file = "LICENSE" }
+license = "Apache-2.0"
+license-files = ["LICENSE"]
 classifiers = [
   "Development Status :: 4 - Beta",
   "Operating System :: OS Independent",
